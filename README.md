@@ -33,20 +33,23 @@ library-api/
 ## ===Tables===
 
 ### books:
+```
 id - primary key,
 title - 50 chars max (not null),
 author - 50 chars max (not null),
 genre - Fiction / Non-fiction / Science / History / Other (must be in this list!)
 is_available - True / False (not null),
 borrowed_by_member_id - if borrowed, borrow member id
+```
 
 ### members:
+```
 id - primary key,
 name - 50 chars max (not null)
 email - uniqe mail address (not null)
 is_active - True / False (not null)
 total_borrows - sum of borrows (not null)
-
+```
 
 ## ===Rules===
 1. _book creation_ - **user** send - title, author, genre, **system** add - is_available=True, borroqed_by=NULL
@@ -68,25 +71,31 @@ total_borrows - sum of borrows (not null)
 ## ===EndPoints===
 
 ### Books:
+```
 POST - /books - Create book
 GET - /books - Get all books
 GET - /books/{id} - Get book
 PATCH - /books/{id} - Update book
 PATCH - /books/{id}/borrow/{member_id} - Book borrow to member
 PATCH - /books/{id}/return/{member_id} - Book return from member
+```
 
 ### Members:
+```
 POST - /members - Create member 
 GET - /members - Get all members
 GET - /members/{id} - Get member
 PATCH - /members/{id} - Update member
 PATCH - /members/{id}/deactivate - Deactive member
 PATCH - /members/{id}/activate - Activate member
+```
 
 ### Reports:
+```
 GET - /reports/summary - Return general summery
 GET - /reports/books-by-genre - Return books by genre stat
 GET - /reports/top-member - Return most active member
+```
 
 ## ===System Flow===
 user -> server/endpoint -> proccess the request -> connect to database -> return the result -> server send result (or raise error)
@@ -94,7 +103,11 @@ user -> server/endpoint -> proccess the request -> connect to database -> return
 ## RUN WITH:
 
 install requirements moduls:
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 run server:
-```uvicorn main:app```
+```
+uvicorn main:app
+```
