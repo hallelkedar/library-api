@@ -12,13 +12,8 @@ def get_connect(host, user, password, database):
     return conn
 
 
-def create_tables():
-
-    conn = get_connect(host='localhost',
-                    user='root', 
-                    password=DB_PASSWORD,
-                    database='library_db'
-                    )
+def create_tables(conn):
+    
     cursor = conn.cursor()
 
     cursor.execute('''
