@@ -1,5 +1,4 @@
 from db_connection import db_connection
-from secret import DB_PASSWORD
 
 class BaseModel:
     def __init__(self, table_name):
