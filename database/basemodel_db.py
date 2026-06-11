@@ -1,15 +1,10 @@
-from db_connection import get_connect
+from db_connection import db_connection
 from secret import DB_PASSWORD
 
 class BaseModel:
     def __init__(self, table_name):
         self.table_name = table_name
-        self.conn = get_connect(
-            host='localhost',
-            user='root',
-            password=DB_PASSWORD,
-            database='library_db'
-        )
+        self.conn = db_connection
         self.cursor = self.conn.cursor(dictionary=True)
 
     def get_all_items(self) -> list[dict]:
