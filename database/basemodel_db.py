@@ -4,8 +4,8 @@ from secret import DB_PASSWORD
 class BaseModel:
     def __init__(self, table_name):
         self.table_name = table_name
-        self.conn = db_connection
-        self.cursor = self.conn.cursor(dictionary=True)
+        self.conn = db_connection.conn
+        self.cursor = db_connection.cursor
 
     def get_all_items(self) -> list[dict]:
         self.cursor.execute('SELECT * FROM %s', (self.table_name,))
