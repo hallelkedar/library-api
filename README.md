@@ -15,6 +15,7 @@ library-api/
 │
 ├── main.py
 ├── database/
+│   ├── basemodel_db.py
 │   ├── db_connection.py
 │   ├── book_db.py
 │   └── member_db.py
@@ -23,6 +24,7 @@ library-api/
 │   ├── member_routes.py
 │   └── report_routes.py
 ├── logs/
+│   ├── logger.py
 │   └── app.log
 │
 ├── README.md
