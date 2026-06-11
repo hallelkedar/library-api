@@ -8,10 +8,11 @@ class DBconnection:
         self.password = password
         self.database = database
         
-        self.conn = self.connect()
+        self.conn = None
+        self.connect()
     
     def connect(self):
-        return mysql.connector.connect(
+        self.conn = mysql.connector.connect(
             host=self.host,
             user=self.user,
             password=self.password,
@@ -19,11 +20,9 @@ class DBconnection:
         )
 
     def get_connection(self):
-        if self.conn.is_connected():
-            return self.conn
-        else:
-            self.conn = self.connect()
-            return self.conn
+        if not self.conn.is_connected() or self.conn is None:
+            self.connect()
+        return self.conn
         
     def create_tables(self):
         
