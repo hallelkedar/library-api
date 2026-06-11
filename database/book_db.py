@@ -21,7 +21,8 @@ class BookDB(BaseModel):
         return super().update_item(book_id, data)
     
     def set_availability(self, book_id: int, val: bool, member_id: int) -> bool:
-        with self.conn.cursor(dictionary=True) as cursor:
+        conn = self.db.get_connection()
+        with conn.cursor(dictionary=True) as cursor:
             query = f'''
             UPDATE {self.table_name}
             SET is_available = %s, borrowed_by_member_id = %s
@@ -36,7 +37,8 @@ class BookDB(BaseModel):
             return changed
     
     def count_total_books(self) -> int:
-        with self.conn.cursor(dictionary=True) as cursor:
+        conn = self.db.get_connection()
+        with conn.cursor(dictionary=True) as cursor:
             cursor.execute(f'SELECT COUNT(*) AS books_count FROM {self.table_name}')
             
             books_count = cursor.fetchone()
@@ -53,17 +55,21 @@ class BookDB(BaseModel):
             return avaliable_count['avaliable_books']
     
     def count_borroewd_books(self) -> int:
-        with self.conn.cursor(dictionary=True) as cursor:
+        conn = self.db.get_connection()
+        with conn.cursor(dictionary=True) as cursor:
             query = f'''
-            SELECT {self.table_name} COUNT(is_available) AS borrowed_books
+            SELECT COUNT(is_available)
+            AS borrowed_books
+            FROM {self.table_name} 
             WHERE is_available = False
             '''
             cursor.execute(query)
-            borrowed_count = cursor.fetchone()
-            return borrowed_count['borrowed_books']
+            borrowed_count = cursor.fetchone()['borrowed_books']
+            return borrowed_count if borrowed_count else 0
     
     def count_by_genre(self) -> list:
-        with self.conn.cursor(dictionary=True) as cursor:
+        conn = self.db.get_connection()
+        with conn.cursor(dictionary=True) as cursor:
             query = f'''
             SELECT genre, COUNT(genre) AS COUNT
             FROM {self.table_name}
@@ -74,12 +80,14 @@ class BookDB(BaseModel):
             return genre_counts
         
     def count_active_borrows_by_member(self, member_id: int) -> int:
-        with self.conn.cursor(dictionary=True) as cursor:
+        conn = self.db.get_connection()
+        with conn.cursor(dictionary=True) as cursor:
             query = f'''
-            SELECT COUNT(*) {self.table_name}
+            SELECT COUNT(*) AS COUNT
+            FROM {self.table_name}
             WHERE borrowed_by_member_id = %s
             '''
             cursor.execute(query, (member_id,))
-            active_count = cursor.fetchone()
-            return active_count
+            active_count = cursor.fetchone()['COUNT']
+            return active_count if active_count else 0
         
