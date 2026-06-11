@@ -30,7 +30,7 @@ library-api/
 └── .gitignore
 ```
 
-## ===Tables===
+## === Tables ===
 
 ### books:
 ```
@@ -51,7 +51,7 @@ is_active - True / False (not null)
 total_borrows - sum of borrows (not null)
 ```
 
-## ===Rules===
+## === Rules ===
 1. _book creation_ - **user** send - title, author, genre, **system** add - is_available=True, borroqed_by=NULL
 
 2. _genre_  - Must be - Fiction / Non-Fiction / Science / History / Other, else - return error (in POST/PUT/PATCH)
@@ -68,7 +68,7 @@ total_borrows - sum of borrows (not null)
 
 8. _book return_ - Member can return book only if it's borrowed to him
 
-## ===EndPoints===
+## === EndPoints ===
 
 ### Books:
 ```
