@@ -13,7 +13,7 @@ def get_connect(host, user, password, database):
 
 
 def create_tables(conn):
-    
+
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -41,3 +41,8 @@ def close_db(cursor, conn):
     cursor.close()
     conn.close()
 
+db_connection = get_connect(host='localhost',
+                    user='root', 
+                    password=DB_PASSWORD,
+                    database='library_db'
+                    )
