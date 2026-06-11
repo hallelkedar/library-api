@@ -3,17 +3,32 @@ from secret import DB_PASSWORD
 
 class DBconnection:
     def __init__(self, host, user, password, database):
-        self.conn = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password,
-            database=database
+        self.host = host
+        self.user = user
+        self.password = password
+        self.database = database
+        
+        self.conn = self.connect()
+    
+    def connect(self):
+        return mysql.connector.connect(
+            host=self.host,
+            user=self.user,
+            password=self.password,
+            database=self.database
         )
-        self.cursor = self.conn.cursor(dictionary=True)
 
+    def get_connection(self):
+        if self.conn.is_connected():
+            return self.conn
+        else:
+            self.conn = self.connect()
+            return self.conn
+        
     def create_tables(self):
-
-        self.cursor.execute('''
+        
+        cursor = self.conn.cursor()
+        cursor.execute('''
                     CREATE TABLE IF NOT EXISTS books (
                         id INT AUTO_INCERMENT PRIMARY KEY,
                         title VARCHAR(50) NOT NULL,
@@ -23,7 +38,7 @@ class DBconnection:
                         borrowed_by_member_id INT UNIQUE
                         );
                 ''')
-        self.cursor.execute('''
+        cursor.execute('''
                     CREATE TABLE IF NOT EXISTS members (
                         id INT AUTO_INCERMENT PRIMARY KEY,
                         name VARCHAR(50) NOT NULL,
@@ -35,7 +50,6 @@ class DBconnection:
         self.conn.commit()
 
     def close_db(self):
-        self.cursor.close()
         self.conn.close()
 
 db_connection = DBconnection(host='localhost',
