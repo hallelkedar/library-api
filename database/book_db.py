@@ -17,7 +17,7 @@ class BookDB(BaseModel):
     def get_book_by_id(self, book_id) -> dict | None:
         return super().get_item_by_id(book_id)
     
-    def update_item(self, book_id: int, data: dict) -> bool:
+    def update_book(self, book_id: int, data: dict) -> bool:
         return super().update_item(book_id, data)
     
     def set_availability(self, book_id: int, val: bool, member_id: int) -> bool:
