@@ -9,8 +9,6 @@ class DBconnection:
         
         self.conn = None
         self.connect()
-        self.init_db()
-        self.init_tables()
     
     def connect(self):
         self.conn = mysql.connector.connect(
