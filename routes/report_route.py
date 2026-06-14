@@ -21,5 +21,7 @@ def get_books_by_genre():
 @router.get('/top-member')
 def get_top_member():
     top_member = member_db.get_top_member()
+    if not top_member:
+        logger.warning('There is no borrowes in members db')
     logger.info('Return top member dict')
     return top_member
