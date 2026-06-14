@@ -4,12 +4,21 @@ class MemberDB(BaseModel):
     def __init__(self, table_name='members'):
         super().__init__(table_name=table_name)
 
+    def find_in_table(self, column: str, value):
+        conn = self.db.get_connection()
+        with conn.cursor() as cursor:
+            cursor.execute(
+                f'SELECT * FROM {self.table_name} WHERE {column} = %s', (value,))
+            return cursor.fetchall()
+        
     def create_member(self, data: dict) -> int:
         member = data.copy()
         member['is_activate'] = True
         member['total_borrows'] = 0
-        new_id = super().create_item(member)
-        return new_id
+        
+        if not self.find_in_table('email', member['email'])
+            new_id = super().create_item(member)
+            return new_id
     
     def get_all_members(self) -> list[dict]:
         return super().get_all_items()
