@@ -13,7 +13,7 @@ def get_report_summery():
 
 @router.get('/books-by-genre')
 def get_books_by_genre():
-    count_by_genre = reports_service.summery_report()
+    count_by_genre = book_db.count_by_genre()
     logger.info('Return count by genre dict')
     return count_by_genre
 
