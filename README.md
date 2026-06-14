@@ -6,7 +6,9 @@ process,
 and connect with SQL db (library_db - books table and members table)**
 
 Docker run -
-```docker run --name mysql-w10 -e MYSQL_ROOT_PASSWORD=<your_password> -e MYSQL_DATABASE=library_db -p 3306:3306 -d mysql:8```
+```
+docker run --name mysql-w10 -e MYSQL_ROOT_PASSWORD=<your_password> -e MYSQL_DATABASE=library -p 3306:3306 -d mysql:8
+```
 
 Direction structure -
 ```
@@ -20,12 +22,18 @@ library-api/
 │   ├── book_db.py
 │   └── member_db.py
 ├── routes/
+│   ├── model.py
 │   ├── book_routes.py
 │   ├── member_routes.py
 │   └── report_routes.py
 ├── logs/
 │   ├── logger.py
 │   └── app.log
+├── services/
+│   ├── app_service.py
+│   ├── book_service.py
+│   ├── member_service.py
+│   └── reports_service.py
 │
 ├── README.md
 ├── requirements.txt
