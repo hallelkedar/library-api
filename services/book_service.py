@@ -1,12 +1,18 @@
 from fastapi import HTTPException
 from services.app_service import book_db
 from services import member_service
+from logs.logger import logger
+
+def get_all_books():
+    all_books = book_db.get_all_books()
+    if not all_books:
+        logger.warning('Books list is empty.')
+    return all_books
 
 def get_book(book_id: int) -> dict | None:
     book = book_db.get_book_by_id(book_id)
     if not book:
         raise HTTPException(404, 'Book not found.')
-    book['is_available'] = bool(book['is_available'])
     return book
 
 def valid_borrow(book_id: int, member_id: int) -> dict | None:

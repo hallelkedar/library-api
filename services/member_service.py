@@ -12,6 +12,7 @@ def get_member(member_id: int) -> dict | None:
     member = member_db.get_member_by_id(member_id)
     if not member:
         raise HTTPException(404, 'Member not found.')
+    
     return member
 
 def set_member_activity(member_id: int, active: bool):
