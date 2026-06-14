@@ -1,6 +1,13 @@
 from fastapi import HTTPException
 from services.app_service import member_db
+from logs.logger import logger
 
+
+def get_all_members():
+    all_members = member_db.get_all_members()
+    if not all_members:
+        logger.warning('Members list is empty.')
+    return all_members
 
 def create_member(data: dict):
     new_id = member_db.create_member(data)
