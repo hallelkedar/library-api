@@ -49,13 +49,13 @@ class BookDB(BaseModel):
         conn = self.db.get_connection()
         with conn.cursor(dictionary=True) as cursor:
             query = f'''
-            SELECT COUNT(*) AS avaliable_books
+            SELECT COUNT(*) AS available_books
             FROM {self.table_name}
             WHERE is_available = TRUE
             '''
             cursor.execute(query)
             avaliable_count = cursor.fetchone()
-            return avaliable_count['avaliable_books']
+            return avaliable_count['available_books']
     
     def count_borrowed_books(self) -> int:
         conn = self.db.get_connection()

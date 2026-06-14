@@ -37,7 +37,7 @@ class MemberDB(BaseModel):
         with conn.cursor(dictionary=True) as cursor:
             query = f'''
                 UPDATE {self.table_name}
-                SET is_active = True
+                SET is_active = False
                 WHERE id = %s
                 '''
             cursor.execute(query, (member_id,))
@@ -51,7 +51,7 @@ class MemberDB(BaseModel):
         with conn.cursor(dictionary=True) as cursor:
             query = f'''
                 UPDATE {self.table_name}
-                SET is_active = False
+                SET is_active = True
                 WHERE id = %s
                 '''
             cursor.execute(query, (member_id,))
