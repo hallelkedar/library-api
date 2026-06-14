@@ -28,7 +28,7 @@ def get_member(id: int):
     return member
 
 @router.patch('/{id}')
-def update_member(id, data: UpdateMember):
+def update_member(id: int, data: UpdateMember):
     member_data = data.model_dump(exclude_unset=True)
     member_service.get_member(id)
     member_db.update_member(id, member_data)
