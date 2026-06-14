@@ -14,11 +14,12 @@ class DBconnection:
         self.conn = mysql.connector.connect(
             host=self.host,
             user=self.user,
-            password=self.password
+            password=self.password,
+            database='library'
         )
 
     def get_connection(self):
-        if not self.conn.is_connected() or self.conn is None:
+        if self.conn is None or not self.conn.is_connected():
             self.connect()
         return self.conn
     
