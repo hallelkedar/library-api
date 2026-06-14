@@ -19,7 +19,7 @@ def valid_borrow(book_id: int, member_id: int) -> dict | None:
     book = get_book(book_id)
     member = member_service.get_member(member_id)
     
-    if book_db.count_active_borrows_by_member(member_id) > 3:
+    if book_db.count_active_borrows_by_member(member_id) >= 3:
         raise HTTPException(400, 'Member has reached maximum borrows')
     
     if not book['is_available']:
