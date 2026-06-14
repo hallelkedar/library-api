@@ -20,7 +20,7 @@ class BookDB(BaseModel):
     def update_book(self, book_id: int, data: dict) -> bool:
         return super().update_item(book_id, data)
     
-    def set_availability(self, book_id: int, val: bool, member_id: int) -> bool:
+    def set_availability(self, book_id: int, val: bool, member_id: int | None) -> bool:
         conn = self.db.get_connection()
         with conn.cursor(dictionary=True) as cursor:
             query = f'''
