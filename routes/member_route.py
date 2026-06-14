@@ -15,7 +15,7 @@ def get_all_members():
 @router.post('')
 def create_member(data: Member):
     member = data.model_dump()
-    new_id = member_db.create_member(member)
+    new_id = member_service.create_member(member)
 
     return_msg = {'detail': f'Member (-id-:{new_id}) created'}
     logger.info(return_msg['detail'])
