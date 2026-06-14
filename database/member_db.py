@@ -16,7 +16,7 @@ class MemberDB(BaseModel):
         member['is_activate'] = True
         member['total_borrows'] = 0
         
-        if not self.find_in_table('email', member['email'])
+        if not self.find_in_table('email', member['email']):
             new_id = super().create_item(member)
             return new_id
     
