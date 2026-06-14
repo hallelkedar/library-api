@@ -5,7 +5,7 @@ logging.basicConfig(
     format='%(asctime)s | %(levelname)s | %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
     handlers=[logging.StreamHandler(),
-              logging.FileHandler('app.log')]
+              logging.FileHandler('logs/app.log')]
 )
 
 logger = logging.getLogger(__name__)
