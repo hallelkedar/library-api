@@ -6,6 +6,7 @@ def get_book(book_id: int) -> dict | None:
     book = book_db.get_book_by_id(book_id)
     if not book:
         raise HTTPException(404, 'Book not found.')
+    book['is_available'] = bool(book['is_available'])
     return book
 
 def valid_borrow(book_id: int, member_id: int) -> dict | None:
