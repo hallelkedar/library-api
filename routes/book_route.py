@@ -16,7 +16,7 @@ def create_book(data: Book):
 
 @router.get('', response_model=list[BookResponse])
 def get_all_books():
-    all_books = book_db.get_all_books()
+    all_books = book_service.get_all_books()
     logger.info('Return all books list')
     return all_books
 
