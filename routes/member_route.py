@@ -26,12 +26,12 @@ def update_member(id, data: UpdateMember):
     member_db.update_member(id, member_data)
     return {'detail': f'Member (-id-:{id}) updated'}
 
-@router.patch('/{id}')
+@router.patch('/{id}/deactivate')
 def deactivate_member(id: int):
     member_service.set_member_activity(id, False)
     return {'detail': f'Member (-id-:{id}) is no longer active'}
 
-@router.patch('/{id}')
+@router.patch('/{id}/activate')
 def activate_member(id: int):
     member_service.set_member_activity(id, True)
     return {'detail': f'Member (-id-:{id}) is active again'}
