@@ -19,6 +19,7 @@ class MemberDB(BaseModel):
         if not self.find_in_table('email', member['email']):
             new_id = super().create_item(member)
             return new_id
+        return None
     
     def get_all_members(self) -> list[dict]:
         return super().get_all_items()
@@ -87,7 +88,7 @@ class MemberDB(BaseModel):
     def get_top_member(self) -> dict | list[dict]:
         conn = self.db.get_connection()
         with conn.cursor(dictionary=True) as cursor:
-            qeury = f'''
+            query = f'''
                     SELECT id AS member_id, total_borrows AS borrowed
                     FROM {self.table_name}
                     WHERE total_borrows = (
@@ -95,6 +96,6 @@ class MemberDB(BaseModel):
                         FROM {self.table_name}
                         )
                     '''
-            cursor.execute(qeury)
+            cursor.execute(query)
             return cursor.fetchall()
         

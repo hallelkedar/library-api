@@ -39,7 +39,7 @@ class DBconnection:
                         author VARCHAR(50) NOT NULL,
                         genre ENUM('Fiction', 'Non-Fiction', 'Science', 'History', 'Other'),
                         is_available BOOLEAN NOT NULL,
-                        borrowed_by_member_id INT UNIQUE
+                        borrowed_by_member_id INT
                         );
                 ''')
         cursor.execute('''
