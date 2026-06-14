@@ -37,7 +37,7 @@ def valid_return(book_id: int, member_id: int) -> dict | None:
     if book['is_available']:
         raise HTTPException(400, 'Book is not borroewd')
     
-    if book['borrowd_by_member_id'] != member_id:
+    if book['borrowed_by_member_id'] != member_id:
         raise HTTPException(400, 'Book is not borrowed by this member')
     
     if not member['is_active']:
