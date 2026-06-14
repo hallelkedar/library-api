@@ -56,7 +56,7 @@ class BookDB(BaseModel):
             avaliable_count = cursor.fetchone()
             return avaliable_count['avaliable_books']
     
-    def count_borroewd_books(self) -> int:
+    def count_borrowed_books(self) -> int:
         conn = self.db.get_connection()
         with conn.cursor(dictionary=True) as cursor:
             query = f'''
