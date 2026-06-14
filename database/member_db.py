@@ -88,7 +88,7 @@ class MemberDB(BaseModel):
         conn = self.db.get_connection()
         with conn.cursor(dictionary=True) as cursor:
             qeury = f'''
-                    SELECT id, total_borrows
+                    SELECT id AS member_id, total_borrows AS borrowed
                     FROM {self.table_name}
                     WHERE total_borrows = (
                         SELECT MAX(total_borrows) 
