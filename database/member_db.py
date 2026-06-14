@@ -79,10 +79,10 @@ class MemberDB(BaseModel):
         conn = self.db.get_connection()
         with conn.cursor(dictionary=True) as cursor:
             qeury = f'''
-                    SELECT id, total_borrows AS top_member
+                    SELECT id, total_borrows
                     FROM {self.table_name}
                     WHERE total_borrows = (
-                        SELECT MAX(total borrows) 
+                        SELECT MAX(total_borrows) 
                         FROM {self.table_name}
                         )
                     '''

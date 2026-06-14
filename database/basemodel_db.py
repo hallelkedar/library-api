@@ -1,5 +1,4 @@
 from database.db_connection import db_connection
-from logs.logger import logger
 
 class BaseModel:
     def __init__(self, table_name):
@@ -11,10 +10,8 @@ class BaseModel:
         with conn.cursor(dictionary=True) as cursor:
             cursor.execute(f'SELECT * FROM {self.table_name}')
             
-            books = cursor.fetchall()
-            if not books:
-                logger.warning('Books list is empty.')
-            return books
+            items = cursor.fetchall()
+            return items
     
     def get_item_by_id(self, message_id: int) -> dict | None:
         conn = self.db.get_connection()
