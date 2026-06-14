@@ -32,7 +32,7 @@ def handle_http_exceptions(req: Request, e: HTTPException):
 
 @app.exception_handler(mysql.connector.Error)
 def sql_exception_handler(req: Request, e: mysql.connector.Error):
-    logger.error(f'{req.method} - {req.url.path} - {e.errno} (msg: {e.msg}', exc_info=True)
+    logger.error(f'{req.method} - {req.url.path} - {e.errno} (msg: {e.msg})', exc_info=True)
     return JSONResponse(
         content={'detail': 'Internal server error'},
         status_code=500
