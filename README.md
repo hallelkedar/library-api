@@ -5,7 +5,7 @@
 process,
 and connect with SQL db (library_db - books table and members table)**
 
-Docker run -
+Docker run (change password to yours) -
 ```
 docker run --name mysql-w10 -e MYSQL_ROOT_PASSWORD=<your_password> -e MYSQL_DATABASE=library -p 3306:3306 -d mysql:8
 ```
