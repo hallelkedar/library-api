@@ -1,12 +1,12 @@
 from fastapi import APIRouter
-from routes.model import Book, UpdateBook
+from routes.model import Book, UpdateBook, BookResponse
 from services.app_service import book_db, member_db
 from services import book_service
 from logs.logger import logger
 
 router = APIRouter()
 
-@router.post('')
+@router.post('', status_code=201)
 def create_book(data: Book):
     book = data.model_dump()
     new_id = book_db.create_book(book)
@@ -14,13 +14,13 @@ def create_book(data: Book):
     logger.info(return_msg['detail'])
     return return_msg
 
-@router.get('')
+@router.get('', response_model=list[BookResponse])
 def get_all_books():
     all_books = book_db.get_all_books()
     logger.info('Return all books list')
     return all_books
 
-@router.get('/{id}')
+@router.get('/{id}', response_model=BookResponse)
 def get_book(id: int):
     book = book_service.get_book(id)
     logger.info(f'Return book number - {id}')

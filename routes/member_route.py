@@ -1,18 +1,18 @@
 from fastapi import APIRouter
-from routes.model import Member, UpdateMember
+from routes.model import Member, UpdateMember, MemberResponse
 from services.app_service import member_db
 from services import member_service
 from logs.logger import logger
 
 router = APIRouter()
 
-@router.get('')
+@router.get('', response_model=list[MemberResponse])
 def get_all_members():
-    all_members = member_db.get_all_members()
+    all_members = member_service.get_all_members()
     logger.info('Return all members list')
     return all_members
 
-@router.post('')
+@router.post('', status_code=201)
 def create_member(data: Member):
     member = data.model_dump()
     new_id = member_service.create_member(member)
@@ -21,7 +21,7 @@ def create_member(data: Member):
     logger.info(return_msg['detail'])
     return return_msg
 
-@router.get('/{id}')
+@router.get('/{id}', response_model=MemberResponse)
 def get_member(id: int):
     member = member_service.get_member(id)
     logger.info(f'Return member number - {id}')
