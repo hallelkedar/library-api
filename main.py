@@ -25,16 +25,19 @@ async def middleware_logging(req: Request, call_next):
 @app.exception_handler(HTTPException)
 def handle_http_exceptions(req: Request, e: HTTPException):
     logger.error(f'{e.status_code} - {e.detail}')
-    return JSONResponse(status_code=e.status_code,
-                        content={'detail': e.detail})
+    return JSONResponse(
+        status_code=e.status_code,
+        content={'detail': e.detail}
+        )
 
 @app.exception_handler(mysql.connector.Error)
 def sql_exception_handler(req: Request, e: mysql.connector.Error):
     logger.error(f'{req.method} - {req.url.path} - {e.errno} (msg: {e.msg}', exc_info=True)
     return JSONResponse(
-        content={'detail': 'Iternal server error'},
+        content={'detail': 'Internal server error'},
         status_code=500
         )
+
 app.include_router(book_route, prefix='/books')
 app.include_router(member_route, prefix='/members')
 app.include_router(reports_route, prefix='/reports')
