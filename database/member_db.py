@@ -13,7 +13,7 @@ class MemberDB(BaseModel):
         
     def create_member(self, data: dict) -> int:
         member = data.copy()
-        member['is_activate'] = True
+        member['is_active'] = True
         member['total_borrows'] = 0
         
         if not self.find_in_table('email', member['email']):
