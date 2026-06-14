@@ -1,4 +1,4 @@
-from db_connection import db_connection
+from database.db_connection import db_connection
 
 class BaseModel:
     def __init__(self, table_name):
@@ -19,7 +19,7 @@ class BaseModel:
             query = f'SELECT * FROM {self.table_name} WHERE id = %s'
             cursor.execute(query, (message_id,))
 
-            item = self.cursor.fetchone()
+            item = cursor.fetchone()
             return item
     
     def create_item(self, data: dict) -> int:
@@ -28,11 +28,11 @@ class BaseModel:
             columns = ', '.join(data)
             placeholders = ', '.join(['%s'] * len(data))
 
-            query = f'INSERT INTO {self.table_name} ({columns} VALUES ({placeholders}))'
+            query = f'INSERT INTO {self.table_name} ({columns}) VALUES ({placeholders})'
             params = tuple(data.values())
 
             cursor.execute(query, params)
-            self.conn.commit()
+            conn.commit()
 
             new_id = cursor.lastrowid
             return new_id
@@ -40,13 +40,13 @@ class BaseModel:
     def update_item(self, item_id: int, data: dict) -> bool:
         conn = self.db.get_connection()
         with conn.cursor(dictionary=True) as cursor:
-            set_clause = [f'{key} = %s' for key in data]
+            set_clause = ', '.join(f'{key} = %s' for key in data)
 
-            query = f'UPDATE {self.table_name} SET ({set_clause}) WHERE id = %s'
+            query = f'UPDATE {self.table_name} SET {set_clause} WHERE id = %s'
             params = list(data.values()) + [item_id]
 
             cursor.execute(query, params)
-            self.conn.commit()
+            conn.commit()
 
             changed = cursor.rowcount > 0
             return changed
@@ -57,7 +57,7 @@ class BaseModel:
             query = f'DELETE FROM {self.table_name} WHERE id = %s'
             
             cursor.execute(query, (item_id,))
-            self.conn.commit()
+            conn.commit()
 
             changed = cursor.rowcount > 0
             return changed

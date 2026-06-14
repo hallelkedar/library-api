@@ -1,4 +1,4 @@
-from basemodel_db import BaseModel
+from database.basemodel_db import BaseModel
 
 class MemberDB(BaseModel):
     def __init__(self, table_name='members'):
@@ -32,7 +32,7 @@ class MemberDB(BaseModel):
                 WHERE id = %s
                 '''
             cursor.execute(query, (member_id,))
-            self.conn.commit()
+            conn.commit()
 
             changed = cursor.rowcount > 0
             return changed
@@ -46,7 +46,7 @@ class MemberDB(BaseModel):
                 WHERE id = %s
                 '''
             cursor.execute(query, (member_id,))
-            self.conn.commit()
+            conn.commit()
             changed = cursor.rowcount > 0
             return changed
         
@@ -59,7 +59,7 @@ class MemberDB(BaseModel):
                 WHERE id = %s
                 '''
             cursor.execute(query, (member_id,))
-            self.conn.commit()
+            conn.commit()
             changed = cursor.rowcount > 0
             return changed
         

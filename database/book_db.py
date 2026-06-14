@@ -1,4 +1,4 @@
-from basemodel_db import BaseModel
+from database.basemodel_db import BaseModel
 
 class BookDB(BaseModel):
     def __init__(self, table_name='books'):
@@ -7,15 +7,17 @@ class BookDB(BaseModel):
     def create_book(self, data: dict) -> int:
         book = data.copy()
         book['is_available'] = True
-        book['borrowed_by'] = None
-        new_id = super().create_item(data)
+        book['borrowed_by_member_id'] = None
+        new_id = super().create_item(book)
         return new_id
     
     def get_all_books(self) -> list[dict]:
         return super().get_all_items()
     
     def get_book_by_id(self, book_id) -> dict | None:
-        return super().get_item_by_id(book_id)
+        book = super().get_item_by_id(book_id)
+        book['is_available'] = bool(book['is_available'])
+        return book
     
     def update_book(self, book_id: int, data: dict) -> bool:
         return super().update_item(book_id, data)
@@ -31,7 +33,7 @@ class BookDB(BaseModel):
             params = (val, member_id, book_id)
 
             cursor.execute(query, params)
-            self.conn.commit()
+            conn.commit()
 
             changed = cursor.rowcount > 0
             return changed
